@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import AboutMe from "./pages/AboutMe";
+import Home from "./pages/Home";
+import PostPage from "./pages/PostPage";
+import NewPost from "./pages/NewPost";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* Routes nest inside one another. Nested route paths build upon
+            parent route paths, and nested route elements render inside
+            parent route elements. See the note about <Outlet> below. */}
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<AboutMe />} />
+        </Route>
+        <Route path="/:id" element={<PostPage />} />
+        <Route path="/newpost" element={<NewPost />} />
+      </Routes>
+    </>
   );
 }
 

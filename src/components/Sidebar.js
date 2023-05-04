@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { posts } from '../PostsArray.js';
+
 
 function Sidebar(props) {
     const { title, postnum, postnum1, postnum2 } = props;

@@ -120,3 +120,15 @@ form div {
   margin: 4px 2px;
   cursor: pointer;
 }
+
+/*style login forn*/
+.login-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.login-page__title {
+  text-align: center;
+}

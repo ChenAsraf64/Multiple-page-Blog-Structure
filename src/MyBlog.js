@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./components/Header.js";
 import Post from "./components/Post.js";
 import Sidebar from "./components/Sidebar.js";
 import { posts } from './PostsArray.js';

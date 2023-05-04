@@ -6,6 +6,8 @@ import AboutMe from "./pages/AboutMe";
 import Home from "./pages/Home";
 import PostPage from "./pages/PostPage";
 import NewPost from "./pages/NewPost";
+import LoginPage from "./pages/LoginPage";
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         </Route>
         <Route path="/:id" element={<PostPage />} />
         <Route path="/newpost" element={<NewPost />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </>
   );

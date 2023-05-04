@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { posts } from "../PostsArray.js";
-import Post from '../components/Post.js';
+import FullPost from '../components/FullPost.js';
 import Header from '../components/Header.js';
 
 const PostPage = () => {
@@ -19,7 +19,7 @@ const PostPage = () => {
     return (
         <div>
             <Header />
-            <Post {...post} />
+            <FullPost {...post} />
         </div>
     );
 };

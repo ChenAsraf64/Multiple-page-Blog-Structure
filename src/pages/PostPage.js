@@ -12,13 +12,12 @@ const PostPage = () => {
 
     // Render the post data, or a message if no matching post was found
     if (!post) {
-        return <div> <Header />
+        return <div>
             Post not found</div>;
     }
 
     return (
         <div>
-            <Header />
             <FullPost {...post} />
         </div>
     );

@@ -1,4 +1,6 @@
-import { TextField, Button, Link } from "@material-ui/core";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 function LoginPage() {
     return (

@@ -68,7 +68,7 @@ span h3,
 /*Positioning "Latest" section*/
 #latest-sidebar .sidebar {
   position: absolute;
-  top: 27px;
+  top: 65px;
   right: 15%;
 }
 
@@ -76,15 +76,15 @@ span h3,
 .line {
   position: absolute;
   border-top: 3px solid black;
-  width: 11%;
-  top: 250px;
+  width: 12%;
+  top: 290px;
   right: 15%;
 }
 
 /*Positioning "Popular" section*/
 #popular-sidebar .sidebar {
   position: absolute;
-  top: 250px;
+  top: 290px;
   right: 15%;
 }
 

@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { posts } from "../PostsArray.js";
 import FullPost from '../components/FullPost.js';
-import Header from '../components/Header.js';
 
 const PostPage = () => {
     // Get the post ID from the URL params

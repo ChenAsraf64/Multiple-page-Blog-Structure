@@ -1,27 +1,31 @@
 import React, { useState } from "react";
-import { posts } from "../PostsArray.js";
+import axios from 'axios';
 
 function NewPostForm() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [author, setAuthor] = useState("");
-    const [published, setPublished] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newPost = {
-            id: posts.length + 1,
+
+        const url = 'http://localhost:5000/posts';
+        const data = {
             title: title,
-            description: description,
-            author: author,
-            published: published,
-        };
-        posts.push(newPost);
-        // Reset form values
-        setTitle("");
-        setDescription("");
-        setAuthor("");
-        setPublished("");
+            body: description,
+            user_id: author
+        }
+
+        axios.post(url, data)
+            .then((res) => {
+                console.log(res.data); // Log the response from the backend
+                setTitle("");
+                setDescription("");
+                setAuthor("");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     return (
@@ -54,17 +58,10 @@ function NewPostForm() {
                     onChange={(e) => setAuthor(e.target.value)}
                 />
             </div>
-            <div>
-                <label htmlFor="published">Published:</label>
-                <input
-                    type="text"
-                    id="published"
-                    value={published}
-                    onChange={(e) => setPublished(e.target.value)}
-                />
-            </div>
+
             <button type="submit" className="myButton">Add Post</button>
         </form>
     );
 }
+
 export default NewPostForm;

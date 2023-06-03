@@ -7,6 +7,8 @@ import PostPage from "./pages/PostPage";
 import LoginPage from "./pages/LoginPage";
 import MyBlog from './pages/MyBlog';
 import NewPostForm from './components/NewPostForm';
+import LogoutPage from './components/LogoutPage';
+
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
           <Route path="/:id" element={<PostPage />} />
           <Route path="/newpost" element={<NewPostForm />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={LogoutPage} />
         </Route>
 
       </Routes>

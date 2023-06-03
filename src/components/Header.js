@@ -1,8 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem } from "@mui/material";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import axios from 'axios';
 
 const Header = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const navigate = useNavigate();
+
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://localhost:5000/logout', {}, { withCredentials: true });
+            document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            navigate('/login');
+        } catch (error) {
+            console.error('Error during logout', error);
+        }
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -21,12 +44,27 @@ const Header = () => {
                 <Button color="inherit" component={Link} to="/newpost">
                     New Post
                 </Button>
-                <Button color="inherit" id="login" component={Link} to="/login">
+                <Button color="inherit" onClick={handleMenuOpen}>
                     Login
+                    <ArrowDropDownIcon />
                 </Button>
+                <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                >
+                    <MenuItem component={Link} to="/login" onClick={handleMenuClose}>
+                        Login
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                        Logout
+                    </MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
     );
 };
 
 export default Header;
+
+

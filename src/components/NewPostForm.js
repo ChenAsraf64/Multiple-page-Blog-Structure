@@ -16,7 +16,7 @@ function NewPostForm() {
             user_id: author
         }
 
-        axios.post(url, data)
+        axios.post(url, data, { withCredentials: true })
             .then((res) => {
                 console.log(res.data); // Log the response from the backend
                 setTitle("");

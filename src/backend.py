@@ -31,7 +31,7 @@ def manage_posts():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print(data)
+    # print(data)
     query = "select id, username, password from users where username = %s"
     values = (data['user'], )
     cursor = db.cursor()
@@ -42,8 +42,9 @@ def login():
         abort(401)
 
     user_id = record[0]
-    hashed_pwd = bcrypt.hashpw(record[2].encode('utf-8'), bcrypt.gensalt())
-    print(f"Hashed password from database: {hashed_pwd}")
+    hashed_pwd = record[2].encode('utf-8')
+    # print(f"Hashed password from database: {hashed_pwd}")
+    # Comparing the hashed password from database with the hashed version of the entered password
     if bcrypt.checkpw(data['pass'].encode('utf-8'), hashed_pwd) is not True:
         abort(401)
 
@@ -64,8 +65,9 @@ def register():
     data = request.get_json()
     username = data['user']
     password = data['pass']
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     query = "insert into users (username, password) values (%s, %s)"
-    values = (username, password)
+    values = (username, hashed_password)
     cursor = db.cursor()
     cursor.execute(query, values)
     db.commit()

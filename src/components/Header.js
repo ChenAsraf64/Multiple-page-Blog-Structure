@@ -59,6 +59,9 @@ const Header = () => {
                     <MenuItem onClick={handleLogout}>
                         Logout
                     </MenuItem>
+                    <MenuItem component={Link} to="/myposts" onClick={handleMenuClose}>
+                        My Posts
+                    </MenuItem>
                 </Menu>
             </Toolbar>
         </AppBar>

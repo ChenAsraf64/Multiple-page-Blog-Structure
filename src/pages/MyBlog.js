@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Post from "../components/Post.js";
 import Sidebar from "../components/Sidebar.js";
 import axios from 'axios';
+import Comments from "../components/Comments.js";
 
 function MyBlog() {
     const sides = [
@@ -56,6 +57,7 @@ function MyBlog() {
                     <div>
                         <button onClick={handleBackClick}>Back</button>
                         <Post key={selectedPost.id} {...selectedPost} />
+                        <Comments postId={selectedPost.id} />
                     </div>
                     :
                     posts.map((post) => (

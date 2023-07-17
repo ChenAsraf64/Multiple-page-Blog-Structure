@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import MyBlog from './pages/MyBlog';
 import NewPostForm from './components/NewPostForm';
 import LogoutPage from './components/LogoutPage';
+import UserPosts from './pages/UserPosts';
+
 
 
 
@@ -25,6 +27,7 @@ function App() {
           <Route path="/newpost" element={<NewPostForm />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={LogoutPage} />
+          <Route path="/myposts" element={<UserPosts />} />
         </Route>
 
       </Routes>

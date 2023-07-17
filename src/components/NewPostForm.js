@@ -4,7 +4,7 @@ import axios from 'axios';
 function NewPostForm() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [author, setAuthor] = useState("");
+    const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,8 +12,7 @@ function NewPostForm() {
         const url = 'http://localhost:5000/posts';
         const data = {
             title: title,
-            body: description,
-            user_id: author
+            body: description
         }
 
         axios.post(url, data, { withCredentials: true })
@@ -21,10 +20,14 @@ function NewPostForm() {
                 console.log(res.data); // Log the response from the backend
                 setTitle("");
                 setDescription("");
-                setAuthor("");
+                setError(null); // Clear any existing error messages
             })
             .catch((err) => {
                 console.error(err);
+                // Check if error response status is 401 Unauthorized
+                if (err.response && err.response.status === 401) {
+                    setError("To post here you need to login");
+                }
             });
     };
 
@@ -49,17 +52,9 @@ function NewPostForm() {
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <div>
-                <label htmlFor="author">Author:</label>
-                <input
-                    type="text"
-                    id="author"
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                />
-            </div>
 
             <button type="submit" className="myButton">Add Post</button>
+            {error && <p>{error}</p>} {/* Display error message when 'error' is not null */}
         </form>
     );
 }

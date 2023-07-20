@@ -1,12 +1,15 @@
+// Header.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, Menu, MenuItem } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, OutlinedInput, IconButton } from "@mui/material";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
+    const [searchText, setSearchText] = useState("");
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -14,6 +17,15 @@ const Header = () => {
 
     const handleMenuClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleSearch = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/search?query=${searchText}`);
+            navigate('/search', { state: { results: response.data } });
+        } catch (error) {
+            console.error('Error during search', error);
+        }
     };
 
     const handleLogout = async () => {
@@ -32,6 +44,17 @@ const Header = () => {
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
                     My Website
                 </Typography>
+                <OutlinedInput
+                    placeholder="Search posts…"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    inputProps={{ 'aria-label': 'search' }}
+                    endAdornment={
+                        <IconButton onClick={handleSearch} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
+                    }
+                />
                 <Button color="inherit" component={Link} to="/">
                     Home
                 </Button>
@@ -44,6 +67,7 @@ const Header = () => {
                 <Button color="inherit" component={Link} to="/newpost">
                     New Post
                 </Button>
+
                 <Button color="inherit" onClick={handleMenuOpen}>
                     Login
                     <ArrowDropDownIcon />

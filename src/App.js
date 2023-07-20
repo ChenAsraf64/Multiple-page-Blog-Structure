@@ -9,6 +9,8 @@ import MyBlog from './pages/MyBlog';
 import NewPostForm from './components/NewPostForm';
 import LogoutPage from './components/LogoutPage';
 import UserPosts from './pages/UserPosts';
+import SearchResults from './components/SearchResults';
+import FullPost from './components/FullPost';
 
 
 
@@ -28,6 +30,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/logout" element={LogoutPage} />
           <Route path="/myposts" element={<UserPosts />} />
+          <Route path="search" element={<SearchResults />} />
+          <Route path="post/:id" element={<FullPost />} />
         </Route>
 
       </Routes>

@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom";
-
+import React from 'react';
 
 function Sidebar(props) {
-    const { title, postnum, postnum1, postnum2 } = props;
+    const { title, posts = [], onPostClick } = props;
+
     return (
-        <div>
-            <div className="sidebar">
-                <h1>{title}</h1>
-                <p>Blog post #{postnum} <Link id={postnum} to={postnum}>go to page</Link></p>
-                <p>Blog post #{postnum1} <Link id={postnum1} to={postnum1}>go to page</Link></p>
-                <p>Blog post #{postnum2} <Link id={postnum2} to={postnum2}>go to page</Link></p>
-            </div>
+        <div className="sidebar">
+            <h1>{title}</h1>
+            {posts.map(post => (
+                <div key={post.id} className="sidebar-item">
+                    Blog post #{post.id}
+                    <button className="arrow-button" onClick={() => onPostClick(post)}>→</button>
+                </div>
+            ))}
         </div>
     );
 }

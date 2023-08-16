@@ -1,4 +1,3 @@
-// Header.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, OutlinedInput, IconButton } from "@mui/material";
@@ -42,7 +41,7 @@ const Header = () => {
         <AppBar position="static">
             <Toolbar>
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    My Website
+                    Chen Asraf Azon
                 </Typography>
                 <OutlinedInput
                     placeholder="Search posts…"

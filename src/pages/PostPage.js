@@ -1,3 +1,5 @@
+//When im cliking on the side bar posts this is the component 
+
 import { useParams } from "react-router-dom";
 import { posts } from "../PostsArray.js";
 import FullPost from '../components/FullPost.js';

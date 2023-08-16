@@ -11,6 +11,8 @@ import LogoutPage from './components/LogoutPage';
 import UserPosts from './pages/UserPosts';
 import SearchResults from './components/SearchResults';
 import FullPost from './components/FullPost';
+import TagPage from './components/TagPage.js';
+import ContactMe from './components/ContactMe';
 
 
 
@@ -18,22 +20,20 @@ import FullPost from './components/FullPost';
 function App() {
   return (
     <>
-      {/* Routes nest inside one another. Nested route paths build upon
-            parent route paths, and nested route elements render inside
-            parent route elements. See the note about <Outlet> below. */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MyBlog />} />
           <Route path="about" element={<AboutMe />} />
+          <Route path="/contact" element={<ContactMe />} />
           <Route path="/:id" element={<PostPage />} />
           <Route path="/newpost" element={<NewPostForm />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={LogoutPage} />
+          <Route path="/logout" element={<LogoutPage />} />
           <Route path="/myposts" element={<UserPosts />} />
           <Route path="search" element={<SearchResults />} />
           <Route path="post/:id" element={<FullPost />} />
+          <Route path="/tag/:tag" element={<TagPage />} />
         </Route>
-
       </Routes>
     </>
   );

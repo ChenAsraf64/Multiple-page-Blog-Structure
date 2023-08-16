@@ -7,11 +7,13 @@ function UserPosts() {
     const [editingTitle, setEditingTitle] = useState('');
     const [editingBody, setEditingBody] = useState('');
     const [error, setError] = useState(null);
+    const [editingTags, setEditingTags] = useState('');
 
     const refetchPosts = () => {
         const url = 'http://localhost:5000/user_posts';
         axios.get(url, { withCredentials: true })
             .then((res) => {
+                console.log(res.data);  // Add this line to log the response data
                 setPosts(res.data);
                 setError(null);
             })
@@ -31,13 +33,15 @@ function UserPosts() {
         setEditingPostId(post.id);
         setEditingTitle(post.title);
         setEditingBody(post.body);
+        setEditingTags(post.tags ? post.tags.join(',') : '');
     };
 
     const updatePost = async () => {
         try {
             const response = await axios.put(`http://localhost:5000/posts/${editingPostId}`, {
                 title: editingTitle,
-                body: editingBody
+                body: editingBody,
+                tags: editingTags.split(',')
             }, { withCredentials: true });
 
             if (response.status === 200) {
@@ -52,6 +56,7 @@ function UserPosts() {
         }
     };
 
+    // Modified Snippet
     const deletePost = async (postId) => {
         if (!window.confirm("Are you sure you want to delete your post?")) {
             return; // If user presses Cancel, we return without deleting the post
@@ -59,6 +64,8 @@ function UserPosts() {
 
         try {
             const response = await axios.delete(`http://localhost:5000/posts/${postId}`, { withCredentials: true });
+
+            console.log(response); // Add this line
 
             if (response.status === 200) {
                 console.log('Post deleted successfully');
@@ -85,6 +92,14 @@ function UserPosts() {
                         <div>
                             <input value={editingTitle} onChange={e => setEditingTitle(e.target.value)} />
                             <textarea value={editingBody} onChange={e => setEditingBody(e.target.value)} />
+                            <label htmlFor="editTags">Tags:</label>
+                            <input
+                                type="text"
+                                id="editTags"
+                                placeholder="Tags editing- separated by ','"
+                                value={editingTags}
+                                onChange={e => setEditingTags(e.target.value)}
+                            />
                             <button onClick={updatePost}>Save</button>
                         </div>
                     ) : (

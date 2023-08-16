@@ -1,3 +1,5 @@
+//When im cliking on the post side bar this is the componenet 
+
 function FullPost(props) {
     const { title, description, author, published } = props;
 

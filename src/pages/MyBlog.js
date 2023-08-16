@@ -3,30 +3,15 @@ import Post from "../components/Post.js";
 import Sidebar from "../components/Sidebar.js";
 import axios from 'axios';
 import Comments from "../components/Comments.js";
+import { useLocation } from 'react-router-dom';
 
 function MyBlog() {
-    const sides = [
-        {
-            id: 1,
-            title: "Latest",
-            postnum: "1",
-            postnum1: "2",
-            postnum2: "3",
-        },
-        {
-            id: 2,
-            title: "Popular",
-            postnum: "3",
-            postnum1: "2",
-            postnum2: "1",
-        },
-    ];
-
-    // Create state variables for posts and selectedPost
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [popularPosts, setPopularPosts] = useState([]);
+    const [refresh, setRefresh] = useState(false);
+    const location = useLocation();
 
-    // Fetch posts
     useEffect(() => {
         axios.get('http://localhost:5000/posts')
             .then(response => {
@@ -35,42 +20,71 @@ function MyBlog() {
             .catch(error => {
                 console.error(`There was an error retrieving the data: ${error}`);
             });
-    }, []);
 
-    // Handle click on a post
+        axios.get('http://localhost:5000/popular-posts')
+            .then(response => {
+                setPopularPosts(response.data);
+            })
+            .catch(error => {
+                console.error(`There was an error retrieving the data: ${error}`);
+            });
+    }, [refresh]);
+
+    useEffect(() => {
+        setSelectedPost(null);
+    }, [location]);
+
+
+    const sortedPostsByTime = [...popularPosts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    const latestPosts = sortedPostsByTime.slice(-3);
+    const topPopularPosts = [...popularPosts].sort((a, b) => b.likes - a.likes).slice(0, 3);
+
     const handlePostClick = (post) => {
         setSelectedPost(post);
     };
 
-    // Handle back to all posts
     const handleBackClick = () => {
         setSelectedPost(null);
+    };
+
+    const handleLike = (postId) => {
+        axios.post(`http://localhost:5000/posts/${postId}/like`)
+            .then(() => {
+                setRefresh(!refresh);
+            })
+            .catch(error => {
+                console.error(`There was an error liking the post: ${error}`);
+            });
     };
 
     return (
         <div id="root">
             <title>My blog</title>
-            <h1>This is my blog</h1>
+            <h1>Chen Asraf Private Blog Post</h1>
 
             <div>
                 {selectedPost ?
                     <div>
                         <button onClick={handleBackClick}>Back</button>
-                        <Post key={selectedPost.id} {...selectedPost} />
+                        <Post key={selectedPost.id} {...selectedPost} likes={selectedPost.likes} handlePostLike={() => handleLike(selectedPost.id)} />
                         <Comments postId={selectedPost.id} />
                     </div>
                     :
-                    posts.map((post) => (
+                    popularPosts.map((post) => (
                         <div key={post.id} onClick={() => handlePostClick(post)}>
-                            <Post {...post} />
+                            <Post {...post} tags={post.tags} likes={post.likes} handlePostLike={() => handleLike(post.id)} />
                         </div>
                     ))
                 }
             </div>
 
-            <div id="latest-sidebar"><Sidebar title={sides[0].title} postnum={sides[0].postnum} postnum1={sides[0].postnum1} postnum2={sides[0].postnum2} /></div>
+            <div id="latest-sidebar">
+                <Sidebar title="Latest" posts={latestPosts} onPostClick={handlePostClick} />
+            </div>
             <div className="line"></div>
-            <div id="popular-sidebar"><Sidebar title={sides[1].title} postnum={sides[1].postnum} postnum1={sides[1].postnum1} postnum2={sides[1].postnum2} /></div>
+            <div id="popular-sidebar">
+                <Sidebar title="Popular" posts={topPopularPosts} onPostClick={handlePostClick} />
+            </div>
         </div>
     );
 }

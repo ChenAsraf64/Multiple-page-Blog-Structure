@@ -1,6 +1,7 @@
 # Blog-connected-backend-to-frontend
 
 A React and Python-Flask powered blog application that allows users to register, post, comment, and like. This README is designed to guide you through the setup, execution, and understanding of the application's extensive features.
+![Uploading Untitled video - Made with Clipchamp.gif…]()
 
 ## Dependencies
 ### Front-end:
